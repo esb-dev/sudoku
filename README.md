@@ -34,9 +34,9 @@ resources subfolder of the project:
 * easy50.txt  
   50 easy puzzles
 
-* top95.txt
+* top95.txt   
   95 hard puzzles
 
-* hardest.txt
+* hardest.txt   
   11 puzzles found by searching for the "hardest puzzles"
 
