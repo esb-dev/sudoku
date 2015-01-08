@@ -11,16 +11,6 @@
   (:require [clojure.java.io :refer (reader)]))
 
 
-(def n1
-  "Order of the grid"
-  3)
-(def n2
-  "Size of the units"
-  (* n1 n1))
-(def n4
-  "Number of cells"
-  (* n2 n2))
-
 (defn rows [board sz]
   (partition sz board))
 
@@ -61,7 +51,7 @@
 
 (defn solve
   [board]
-  (println board)
+  ; (println board) ; observe the recursion
   (if-let [[i & _] (and (some '#{\.} board)
                         (pos '#{\.} board))]
    (flatten (map #(solve (assoc board i %)) (possible-placements board i)))
@@ -81,25 +71,24 @@
 (solve puzzle)
 
 (def ambiguous (vec "34..7659878934512656..89347413762859625891734897453612978534261256918473134627985"))
+
 (count (solve ambiguous))
+; => 162, should be 81
 
-; --- from lwb
 ;; ## Pretty-printing puzzles and solutions
-
 (defn pretty-print
+  "Prints puzzle of order 3 decoded as a vector of digits."
   [puzzle]
   (let [rule "+-------+-------+-------+\n"]
-    (doseq [[row col ch] (map-indexed #(vector (inc (quot %1 n2)) (inc (rem %1 n2)) %2) puzzle)]
-      (if (and (= 1 col) (= 1 (mod row n1))) (print rule))
-      (cond (= 1 (mod col n1)) (print (str "| " ch ))
-            (= 2 (mod col n1)) (print (str " " ch ))
-            (= 0 (mod col n1)) (print (str " " ch " "))
-            )
-      (if (= 9 col) (print "|\n"))
-      )
+    (doseq [[row col ch] (map-indexed #(vector (inc (quot %1 9)) (inc (rem %1 9)) %2) puzzle)]
+      (if (and (= 1 col) (= 1 (mod row 3))) (print rule))
+      (cond (= 1 (mod col 3)) (print (str "| " ch ))
+            (= 2 (mod col 3)) (print (str " " ch ))
+            (= 0 (mod col 3)) (print (str " " ch " ")))
+      (if (= 9 col) (print "|\n")) )
     (print rule)))
 
-;; ## Example for a puzzle
+stop -- the following is the interactive part
 
 (pretty-print puzzle)
 
@@ -129,7 +118,7 @@
 easy50
 
 (bench (take 4 easy50))
-;=> 21 secs
+;=> 22 secs
 
 ;; top95.txt
 (def top95 (parse "resources/sudoku/top95.txt"))
@@ -144,6 +133,7 @@ top95
 
 hardest
 
-(bench hardest)
+(bench (take 1 hardest))
+;=> 11 secs
 
 

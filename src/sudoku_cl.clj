@@ -31,7 +31,9 @@
         (init (next vars) (next puzzle))))
     s#))
 
-(defn solve [puzzle]
+(defn solve
+  "Solve Sudoku puzzle, represented as a vector of integers in (range 1 10)"
+  [puzzle]
   (let [vars (repeatedly 81 lvar)
         rows (mapv vec (partition 9 vars))
         cols (apply map vector rows)
@@ -52,12 +54,6 @@
   (let [i0 (int \0)]
     (if (= \. char) 0 (- (int char) i0))))
 
-(def puzzle (map ctoi ".24...38.6.72.91.481.7.3.96.48...97...........69...51.75.9.8.414.16.57.9.96...83."))
-
-puzzle
-
-(solve puzzle)
-
 (defn pretty-print
   "Prints puzzle of order 3 decoded as a vector of integers."
   [puzzle]
@@ -70,6 +66,10 @@ puzzle
               (= 0 (mod col 3)) (print (str " " ch " ")))
         (if (= 9 col) (print "|\n"))))
     (print rule)))
+
+stop -- the following is the interactive part
+
+(def puzzle (map ctoi ".24...38.6.72.91.481.7.3.96.48...97...........69...51.75.9.8.414.16.57.9.96...83."))
 
 (pretty-print puzzle)
 
