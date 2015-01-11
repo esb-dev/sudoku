@@ -98,7 +98,8 @@ stop -- the following is the interactive part
 
 easy50
 
-(bench easy50)
+(dotimes [_ 10]
+  (bench easy50))
 ;=> 3.0 msecs
 
 ;; top95.txt
@@ -106,7 +107,8 @@ easy50
 
 top95
 
-(bench top95)
+(dotimes [_ 10]
+  (bench top95))
 ;=> 3.8 msecs
 
 ;; hardest.txt
@@ -114,5 +116,6 @@ top95
 
 hardest
 
-(bench hardest)
+(dotimes [_ 10]
+  (bench hardest))
 ;=> 0.5 msecs

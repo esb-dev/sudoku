@@ -171,21 +171,24 @@ stop -- the following is the interactive part
 
 easy50
 
-(bench easy50)
-;=> 1.1 secs
+(dotimes [_ 10]
+  (bench easy50))
+;=> 0.9 secs
 
 ;; top95.txt
 (def top95 (parse "resources/sudoku/top95.txt"))
 
 top95
 
-(bench top95)
-;=> 7.1 secs
+(dotimes [_ 10]
+  (bench top95))
+;=> 5.2 secs
 
 ;; hardest.txt
 (def hardest (parse "resources/sudoku/hardest.txt"))
 
 hardest
 
-(bench hardest)
+(dotimes [_ 10]
+  (bench hardest))
 ;=> 0.8 secs
