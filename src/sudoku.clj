@@ -116,8 +116,9 @@
       (if-let [singles (singletons cand)]  ;; assoc singletons
         (solve (assoc-singletons puzzle singles))
         ;else backtracking
-        (let [[idx c-set] (first cand)]
-          (first (drop-while nil? (map #(solve (assoc puzzle idx %)) c-set))))))))
+        (let [[idx candidate-set] (first cand)]
+          (first (drop-while nil?
+                             (map #(solve (assoc puzzle idx %)) candidate-set))))))))
 
 ;; ## Pretty-printing puzzles and solutions
 (defn pretty-print
@@ -142,11 +143,17 @@ stop -- the following is the interactive part
 
 (pretty-print (solve puzzle))
 
-(def ambiguous (apply vector "34..7659878934512656..89347413762859625891734897453612978534261256918473134627985"))
+(def ambiguous (vec "34..7659878934512656..89347413762859625891734897453612978534261256918473134627985"))
 
 (pretty-print ambiguous)
 
 (pretty-print (solve ambiguous))
+
+(def hard (vec "1.....7.9.4...72..8.........7..1..6.3.......5.6..4..2.........8..53...7.7.2....46"))
+
+(pretty-print hard)
+
+(pretty-print (solve hard))
 
 ;; ## Parser for files containing puzzles
 ;; The parsers looks for lines with 81 characters, the digits 1-9 and the character .
@@ -173,7 +180,7 @@ easy50
 
 (dotimes [_ 10]
   (bench easy50))
-;=> 0.9 secs
+;=> 916 msecs
 
 ;; top95.txt
 (def top95 (parse "resources/sudoku/top95.txt"))
@@ -182,7 +189,7 @@ top95
 
 (dotimes [_ 10]
   (bench top95))
-;=> 5.2 secs
+;=> 5219 msecs
 
 ;; hardest.txt
 (def hardest (parse "resources/sudoku/hardest.txt"))
@@ -191,4 +198,6 @@ hardest
 
 (dotimes [_ 10]
   (bench hardest))
-;=> 0.8 secs
+;=> 616 msecs
+
+; average for 1 puzzle: 43,2 msecs

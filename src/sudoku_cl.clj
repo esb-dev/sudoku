@@ -40,13 +40,13 @@
         blocks (for [x (range 0 9 3)
                      y (range 0 9 3)]
                     (get-block rows x y))]
-    (run 1 [q]
-         (== q vars)
-         (everyg #(fd/in % (fd/domain 1 2 3 4 5 6 7 8 9)) vars)
-         (init vars puzzle)
-         (everyg fd/distinct rows)
-         (everyg fd/distinct cols)
-         (everyg fd/distinct blocks))))
+      (first (run 1 [q]
+               (== q vars)
+               (everyg #(fd/in % (fd/domain 1 2 3 4 5 6 7 8 9)) vars)
+               (init vars puzzle)
+               (everyg fd/distinct rows)
+               (everyg fd/distinct cols)
+               (everyg fd/distinct blocks)))))
 
 (defn ctoi
   "Returns the int of given char, 0 if char is '.'."
@@ -73,7 +73,13 @@ stop -- the following is the interactive part
 
 (pretty-print puzzle)
 
-(pretty-print (first (solve puzzle)))
+(pretty-print (solve puzzle))
+
+(def hard (map ctoi "1.....7.9.4...72..8.........7..1..6.3.......5.6..4..2.........8..53...7.7.2....46"))
+
+(pretty-print hard)
+
+(pretty-print (solve hard))
 
 ;; ## Parser for files containing puzzles
 ;; The parsers looks for lines with 81 characters, the digits 1-9 and the character .
@@ -100,7 +106,7 @@ easy50
 
 (dotimes [_ 10]
   (bench easy50))
-;=> 3.0 msecs
+;=>  1108 msecs
 
 ;; top95.txt
 (def top95 (parse "resources/sudoku/top95.txt"))
@@ -109,7 +115,7 @@ top95
 
 (dotimes [_ 10]
   (bench top95))
-;=> 3.8 msecs
+;=> 505145 msecs
 
 ;; hardest.txt
 (def hardest (parse "resources/sudoku/hardest.txt"))
@@ -118,4 +124,6 @@ hardest
 
 (dotimes [_ 10]
   (bench hardest))
-;=> 0.5 msecs
+;=>  2839.4 msecs
+
+; average for 1 puzzle: 3263 msecs
