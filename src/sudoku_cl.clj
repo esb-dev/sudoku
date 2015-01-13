@@ -106,7 +106,7 @@ easy50
 
 (dotimes [_ 10]
   (bench easy50))
-;=>  1108 msecs
+;=>  22 msecs per puzzle
 
 ;; top95.txt
 (def top95 (parse "resources/sudoku/top95.txt"))
@@ -115,7 +115,36 @@ top95
 
 (dotimes [_ 10]
   (bench top95))
-;=> 505145 msecs
+;=> 5317 msecs per puzzle
+
+; Why is core.logic so slow on puzzles in top95?
+; there are a lot of puzzles in top95 with the minimum possible numbers of
+; givens, that is 17
+
+; but there are puzzles with 17 givens, that are solved fast and
+; others that are sloved slow
+; examples:
+(comment
+  (def p88 (nth top95 88))
+  (def p92 (nth top95 92))
+
+  (- 81 (count (filter zero? p88)))
+  ; => 17
+  (time (solve p88))
+  ; 25449 msecs slow
+
+  (- 81 (count (filter zero? p92)))
+  ; => 17
+  (time (solve p92))
+  ; 1462 msecs fast
+)
+; conclusion:
+; the reason is _not_ the number of givens
+
+; I checked, that both puzzles p88 and p92 are well posed, i.e.
+; have a unique solution
+
+; result: It's unclear why core.logic is sometimes slow, sometimes not!
 
 ;; hardest.txt
 (def hardest (parse "resources/sudoku/hardest.txt"))
@@ -124,6 +153,6 @@ hardest
 
 (dotimes [_ 10]
   (bench hardest))
-;=>  2839.4 msecs
+;=>  258 msecs per puzzle
 
-; average for 1 puzzle: 3263 msecs
+; average 3263 msecs per puzzle

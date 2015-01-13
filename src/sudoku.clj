@@ -180,7 +180,7 @@ easy50
 
 (dotimes [_ 10]
   (bench easy50))
-;=> 916 msecs
+;=> 18 msecs per puzzle
 
 ;; top95.txt
 (def top95 (parse "resources/sudoku/top95.txt"))
@@ -189,7 +189,7 @@ top95
 
 (dotimes [_ 10]
   (bench top95))
-;=> 5219 msecs
+;=> 55 msecs per puzzle
 
 ;; hardest.txt
 (def hardest (parse "resources/sudoku/hardest.txt"))
@@ -198,6 +198,6 @@ hardest
 
 (dotimes [_ 10]
   (bench hardest))
-;=> 616 msecs
+;=> 56 msecs per puzzle
 
-; average for 1 puzzle: 43,2 msecs
+; average 43 msecs per puzzle
