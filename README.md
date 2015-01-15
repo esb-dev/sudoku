@@ -40,3 +40,7 @@ resources subfolder of the project:
 * hardest.txt   
   11 puzzles found by searching for the "hardest puzzles"
 
+---
+
+Slides [3 times Sudoku - Logic and Constraints in Clojure](https://homepages.thm.de/~hg11260/mat/3xs-bh.pdf)
+at the German Clojure Conference, Jan 24th, 2015 in Berlin.

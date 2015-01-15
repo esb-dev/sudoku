@@ -141,7 +141,7 @@ top95
 ; conclusion:
 ; the reason is _not_ the number of givens
 
-; I checked, that both puzzles p88 and p92 are well posed, i.e.
+; I checked, that both puzzles p88 and p92 are well-posed, i.e.
 ; have a unique solution
 
 ; result: It's unclear why core.logic is sometimes slow, sometimes not!

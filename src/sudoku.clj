@@ -118,7 +118,7 @@
         ;else backtracking
         (let [[idx candidate-set] (first cand)]
           (first (drop-while nil?
-                             (map #(solve (assoc puzzle idx %)) candidate-set))))))))
+               (map #(solve (assoc puzzle idx %)) candidate-set))))))))
 
 ;; ## Pretty-printing puzzles and solutions
 (defn pretty-print
